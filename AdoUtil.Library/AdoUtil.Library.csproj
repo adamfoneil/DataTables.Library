@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Adam O'Neil</Authors>
     <Company>Adam O'Neil</Company>
-    <Description>Helper methods for querying DataTables with ADO.NET</Description>
+    <Description>Helper methods for querying DataTables with ADO.NET and SQL Server</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageId>AdoUtil.Library</PackageId>
     <PackageProjectUrl>https://github.com/adamosoftware/AdoUtil</PackageProjectUrl>
