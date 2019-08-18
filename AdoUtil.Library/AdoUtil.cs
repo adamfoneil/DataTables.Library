@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace AdoUtil
 {
-    public static class AdoUtil
+    public static partial class AdoUtil
     {
         public static DataRow QueryRow(SqlCommand command)
         {
