@@ -53,12 +53,13 @@ namespace AdoUtil
             return (row != null);
         }
 
-        public static async Task ExecuteAsync(this SqlConnection connection, string commandText, CommandType commandType = CommandType.Text, Action<SqlCommand> setParameters = null)
+        public static async Task ExecuteAsync(this SqlConnection connection, string commandText, CommandType commandType = CommandType.Text, Action<SqlCommand> setParameters = null, int commandTimeout = 30)
         {
             if (connection.State == ConnectionState.Closed) connection.Open();
             using (var cmd = new SqlCommand(commandText, connection))
             {
                 cmd.CommandType = commandType;
+                cmd.CommandTimeout = commandTimeout;
                 setParameters?.Invoke(cmd);
                 await Task.Run(() => cmd.ExecuteNonQuery());
             }
