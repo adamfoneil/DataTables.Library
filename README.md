@@ -4,9 +4,9 @@ Nuget package: **DataTables.Library** (formerly AdoUtil.Library)
 
 Version 2.x of this library offers these extension methods:
 
-- `SqlConnection` [QueryTable](https://github.com/adamosoftware/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L11) 
-- `SqlConnection` [QueryTableAsync](https://github.com/adamosoftware/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L24)
-- `IEnumerable<T>` [ToDataTable](https://github.com/adamosoftware/DataTables.Library/blob/master/DataTables.Library/IEnumerableExtensions.cs#L13)
+- [QueryTable](https://github.com/adamosoftware/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L11) `(this SqlConnection)`
+- [QueryTableAsync](https://github.com/adamosoftware/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L24)`(this SqlConnection)`
+- [ToDataTable](https://github.com/adamosoftware/DataTables.Library/blob/master/DataTables.Library/IEnumerableExtensions.cs#L13)`(this IEnumerable<T>)`
 
 The `Query-` methods support Dapper-style anonymous object parameters, as seen [here](https://github.com/adamosoftware/AdoUtil/blob/master/Testing/QueryTableTests.cs#L29) and [here](https://github.com/adamosoftware/AdoUtil/blob/master/Testing/QueryTableTests.cs#L49). You can also pass a dictionary as query parameters, as seen [here](https://github.com/adamosoftware/AdoUtil/blob/master/Testing/QueryTableTests.cs#L59) and [here](https://github.com/adamosoftware/AdoUtil/blob/master/Testing/QueryTableTests.cs#L72).
 
