@@ -1,4 +1,4 @@
-Most of the time I use Dapper (in some form or another, mainly through my [Postulate](https://github.com/adamosoftware/Postulate) library or [Dapper.CX](https://github.com/adamosoftware/Dapper.CX) library) for all data access. Sometimes, I need to use ADO.NET DataTables for really dynamic things. The syntax for querying DataTables isn't terribly convenient, so that's why this library exists.
+Most of the time I use Dapper (in some form or another, mainly through my [Postulate](https://github.com/adamosoftware/Postulate) library or [Dapper.CX](https://github.com/adamosoftware/Dapper.CX) library) for all data access. Sometimes, I need to use ADO.NET DataTables for really dynamic things, such as in my [SqlIntegration](https://github.com/adamosoftware/SqlIntegration) project. The syntax for querying DataTables isn't terribly convenient, so that's why this library exists.
 
 Nuget package: **DataTables.Library** (formerly AdoUtil.Library)
 
