@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AdoUtil.Library\AdoUtil.Library.csproj" />
+    <ProjectReference Include="..\DataTables.Library\DataTables.Library.csproj" />
   </ItemGroup>
 
 </Project>

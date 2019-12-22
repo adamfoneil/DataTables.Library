@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AdoUtil
+namespace DataTables.Library
 {
     public static class SqlConnectionExtensions
     {
