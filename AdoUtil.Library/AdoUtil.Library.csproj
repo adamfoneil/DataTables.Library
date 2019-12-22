@@ -10,8 +10,8 @@
     <PackageId>AdoUtil.Library</PackageId>
     <PackageProjectUrl>https://github.com/adamosoftware/AdoUtil</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamosoftware/AdoUtil</RepositoryUrl>
-    <Version>1.1.1</Version>
-    <PackageReleaseNotes>Added async methods</PackageReleaseNotes>
+    <Version>2.0.0</Version>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
