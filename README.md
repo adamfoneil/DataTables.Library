@@ -4,8 +4,8 @@ Nuget package: **DataTables.Library** (formerly AdoUtil.Library)
 
 Version 2.0 of this library offers two `SqlConnection` extension methods:
 
-- [QueryTable](https://github.com/adamosoftware/AdoUtil/blob/master/AdoUtil.Library/SqlConnectionExtensions.cs#L11)
-- [QueryTableAsync](https://github.com/adamosoftware/AdoUtil/blob/master/AdoUtil.Library/SqlConnectionExtensions.cs#L24)
+- [QueryTable](https://github.com/adamosoftware/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L11)
+- [QueryTableAsync](https://github.com/adamosoftware/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L24)
 - [ToDataTable](https://github.com/adamosoftware/DataTables.Library/blob/master/DataTables.Library/IEnumerableExtensions.cs#L13) `IEnumerable<T>` extension method.
 
 The `Query-` methods support Dapper-style anonymous object parameters, as seen [here](https://github.com/adamosoftware/AdoUtil/blob/master/Testing/QueryTableTests.cs#L29) and [here](https://github.com/adamosoftware/AdoUtil/blob/master/Testing/QueryTableTests.cs#L49).
