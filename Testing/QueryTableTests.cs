@@ -30,8 +30,8 @@ namespace Testing
         {
             using (var cn = LocalDb.GetConnection(dbName))
             {
-                // won't be any data, just want to make sure no exception using parameter
-                var dataTable = cn.QueryTable("SELECT * FROM [sys].[tables] WHERE [name]=@name", new { name = "fred" });
+                var dataTable = cn.QueryTable("SELECT * FROM [sys].[objects] WHERE [name]=@name", new { name = "sysfos" });
+                Assert.IsTrue(dataTable.Rows.Count == 1);
             }
         }
         
@@ -50,8 +50,8 @@ namespace Testing
         {
             using (var cn = LocalDb.GetConnection(dbName))
             {
-                var dataTable = cn.QueryTableAsync("SELECT * FROM [sys].[tables] WHERE [name]=@name", new { name = "fred" }).Result;
-                Assert.IsTrue(dataTable.Columns.Count > 0);
+                var dataTable = cn.QueryTableAsync("SELECT * FROM [sys].[objects] WHERE [name]=@name", new { name = "sysfos" }).Result;
+                Assert.IsTrue(dataTable.Rows.Count == 1);
             }
         }
 
@@ -72,12 +72,12 @@ namespace Testing
         public void AsyncCallWithDictionaryParam()
         {
             using (var cn = LocalDb.GetConnection(dbName))
-            {
-                // won't be any data, just want to make sure no exception using parameter
-                var dataTable = cn.QueryTableAsync("SELECT * FROM [sys].[tables] WHERE [name]=@name", new Dictionary<string, object>()
+            {                
+                var dataTable = cn.QueryTableAsync("SELECT * FROM [sys].[objects] WHERE [name]=@name", new Dictionary<string, object>()
                 {
-                    { "name", "fred" }
+                    { "name", "sysfos" }
                 }).Result;
+                Assert.IsTrue(dataTable.Rows.Count == 1);
             }
 
         }
