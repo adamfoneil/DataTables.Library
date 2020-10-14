@@ -10,8 +10,8 @@
     <PackageId>DataTables.Library</PackageId>
     <PackageProjectUrl>https://github.com/adamfoneil/AdoUtil</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamfoneil/AdoUtil</RepositoryUrl>
-    <Version>2.0.2</Version>
-    <PackageReleaseNotes>Replaced System.Data.SqlClient with Microsoft.Data.SqlClient</PackageReleaseNotes>
+    <Version>2.0.3</Version>
+    <PackageReleaseNotes>support for nullable types in ToDataTable</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

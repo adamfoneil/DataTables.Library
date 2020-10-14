@@ -45,5 +45,24 @@ namespace Testing
 
             Assert.IsTrue(table.Rows[0]["Message"].Equals("hello"));
         }
+
+        [TestMethod]
+        public void EnumerableWithNullableToDataTable()
+        {
+            var items = new WithNullable[]
+            {
+                new WithNullable() { Message = "hello", Date = DateTime.Today, Flag = true },
+                new WithNullable() { Message = "good-bye", Date = null, Flag = false }
+            };
+
+            var table = items.ToDataTable();
+        }
+
+        private class WithNullable
+        {
+            public string Message { get; set; }
+            public DateTime? Date { get; set; }
+            public bool Flag { get; set; }
+        }
     }
 }

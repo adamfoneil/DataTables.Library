@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
@@ -26,7 +27,12 @@ namespace DataTables.Library
                     .Where(pi => pi.CanRead)
                     .ToDictionary(item => item.Name);
 
-                foreach (string name in properties.Keys) dataTable.Columns.Add(name, properties[name].PropertyType);
+                foreach (string name in properties.Keys)
+                {
+                    var propertyType = properties[name].PropertyType;
+                    var columnType = (IsNullableGeneric(propertyType)) ? propertyType.GetGenericArguments()[0] : propertyType;
+                    dataTable.Columns.Add(name, columnType);
+                }
 
                 foreach (T obj in enumerable)
                 {
@@ -35,6 +41,11 @@ namespace DataTables.Library
             }
 
             return dataTable;
+        }
+
+        private static bool IsNullableGeneric(Type type)
+        {
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
     }
 }
