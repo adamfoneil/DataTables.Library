@@ -58,11 +58,37 @@ namespace Testing
             var table = items.ToDataTable();
         }
 
+        [TestMethod]
+        public void EnumerableWithComplexNullable()
+        {
+            var items = new WithNullableComplex[]
+            {
+                new WithNullableComplex() { Message = "hello", Date = DateTime.Today, Flag = true },
+                new WithNullableComplex() { Message = "good-bye", Date = null, Flag = false }
+            };
+
+            var table = items.ToDataTable();
+            Assert.IsTrue(!table.Columns.Contains("WithNullable"));
+            Assert.IsTrue(table.Columns.Count == 3);
+
+            var table2 = items.ToDataTable(simpleTypesOnly: false);
+            Assert.IsTrue(table2.Columns.Contains("WithNullable"));
+            Assert.IsTrue(table2.Columns.Count == 4);
+        }
+
         private class WithNullable
         {
             public string Message { get; set; }
             public DateTime? Date { get; set; }
             public bool Flag { get; set; }
+        }
+
+        private class WithNullableComplex
+        {
+            public string Message { get; set; }
+            public DateTime? Date { get; set; }
+            public bool Flag { get; set; }
+            public WithNullable WithNullable { get; set; }
         }
     }
 }

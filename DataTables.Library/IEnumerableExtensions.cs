@@ -11,7 +11,7 @@ namespace DataTables.Library
         /// <summary>
         /// adapted from https://www.codeproject.com/Articles/835519/Passing-Table-Valued-Parameters-with-Dapper
         /// </summary>
-        public static DataTable ToDataTable<T>(this IEnumerable<T> enumerable)
+        public static DataTable ToDataTable<T>(this IEnumerable<T> enumerable, bool simpleTypesOnly = true)
         {
             DataTable dataTable = new DataTable();
 
@@ -22,9 +22,12 @@ namespace DataTables.Library
             }
             else
             {
+                Func<PropertyInfo, bool> filter = (pi) => true;
+                if (simpleTypesOnly) filter = (pi) => pi.PropertyType.Equals(typeof(string)) || pi.PropertyType.IsValueType;
+
                 var properties = typeof(T)
                     .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Where(pi => pi.CanRead)
+                    .Where(pi => pi.CanRead && filter(pi))
                     .ToDictionary(item => item.Name);
 
                 foreach (string name in properties.Keys)
