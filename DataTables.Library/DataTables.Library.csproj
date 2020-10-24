@@ -8,10 +8,10 @@
     <Description>Helper methods for querying DataTables with ADO.NET and SQL Server</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageId>DataTables.Library</PackageId>
-    <PackageProjectUrl>https://github.com/adamfoneil/AdoUtil</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/adamfoneil/AdoUtil</RepositoryUrl>
-    <Version>2.0.4</Version>
-    <PackageReleaseNotes>support for nullable types in ToDataTable</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/adamfoneil/DataTables.Library</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/adamfoneil/DataTables.Library</RepositoryUrl>
+    <Version>2.0.5</Version>
+    <PackageReleaseNotes>fixed repo and project links</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
