@@ -7,13 +7,24 @@ Nuget package: **DataTables.Library** (formerly AdoUtil.Library)
 
 Version 2.x of this library offers these extension methods:
 
+# DataTables.Library.IEnumerableExtensions [IEnumerableExtensions.cs](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/IEnumerableExtensions.cs#L9)
+## Methods
 - DataTable [ToDataTable](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/IEnumerableExtensions.cs#L14)
  (this IEnumerable<T> enumerable, [ bool simpleTypesOnly ])
-- DataTable [QueryTable](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L11)
+
+# DataTables.Library.SqlConnectionExtensions [SqlConnectionExtensions.cs](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L7)
+## Methods
+- DataTable [QueryTable](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L9)
  (this SqlConnection connection, string sql, [ object parameters ])
-- Task\<DataTable\> [QueryTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L24)
+- Task\<DataTable\> [QueryTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L12)
  (this SqlConnection connection, string sql, [ object parameters ])
 
+# DataTables.Library.Abstract.QueryRunner [QueryRunner.cs](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L9)
+## Methods
+- DataTable [QueryTable](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L15)
+ (IDbConnection connection, string sql, [ object parameters ])
+- Task\<DataTable\> [QueryTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L28)
+ (IDbConnection connection, string sql, [ object parameters ])
 
 The `Query-` methods support Dapper-style anonymous object parameters, as seen [here](https://github.com/adamosoftware/AdoUtil/blob/master/Testing/QueryTableTests.cs#L29) and [here](https://github.com/adamosoftware/AdoUtil/blob/master/Testing/QueryTableTests.cs#L49). You can also pass a dictionary as query parameters, as seen [here](https://github.com/adamosoftware/AdoUtil/blob/master/Testing/QueryTableTests.cs#L59) and [here](https://github.com/adamosoftware/AdoUtil/blob/master/Testing/QueryTableTests.cs#L72).
 
