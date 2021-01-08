@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataTables.Library.Internal;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace DataTables.Library
             else
             {
                 Func<PropertyInfo, bool> filter = (pi) => true;
-                if (simpleTypesOnly) filter = (pi) => pi.PropertyType.Equals(typeof(string)) || pi.PropertyType.IsValueType;
+                if (simpleTypesOnly) filter = (pi) => pi.PropertyType.IsSimpleType();
 
                 var properties = typeof(T)
                     .GetProperties(BindingFlags.Public | BindingFlags.Instance)

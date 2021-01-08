@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using DataTables.Library.Internal;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,7 +57,7 @@ namespace DataTables.Library.Abstract
                 {
                     var props = parameters.GetType()
                         .GetProperties()
-                        .Where(pi => pi.CanRead && !pi.GetIndexParameters().Any() && pi.GetValue(parameters) != null)
+                        .Where(pi => pi.PropertyType.IsSimpleType() && pi.CanRead && !pi.GetIndexParameters().Any() && pi.GetValue(parameters) != null && )
                         .ToArray();
 
                     foreach (var propertyInfo in props)
