@@ -30,7 +30,8 @@ namespace DataTables.Library.Abstract
                 using (var adapter = GetAdapter(cmd))
                 {
                     DataTable result = new DataTable();
-                    adapter.Fill(result);
+                    int rows = adapter.Fill(result);
+                    Debug.Print($"QueryTable execute: {rows:n0} affected");
                     return result;
                 }
             }
