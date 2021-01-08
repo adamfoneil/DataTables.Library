@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,6 +20,13 @@ namespace DataTables.Library.Abstract
         {
             using (var cmd = BuildCommand(connection, sql, parameters))
             {
+                Debug.Print($"QueryTable SQL: {sql}");
+                
+                foreach (IDbDataParameter p in cmd.Parameters)
+                {
+                    Debug.Print($"QueryTable Param: {p.ParameterName} = {p.Value?.ToString()}");
+                }
+
                 using (var adapter = GetAdapter(cmd))
                 {
                     DataTable result = new DataTable();

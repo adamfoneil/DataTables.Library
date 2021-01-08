@@ -34,7 +34,7 @@ namespace DataTables.Library
                 foreach (string name in properties.Keys)
                 {
                     var propertyType = properties[name].PropertyType;
-                    var columnType = (IsNullableGeneric(propertyType)) ? propertyType.GetGenericArguments()[0] : propertyType;
+                    var columnType = (propertyType.IsNullableGeneric()) ? propertyType.GetGenericArguments()[0] : propertyType;
                     dataTable.Columns.Add(name, columnType);
                 }
 
@@ -45,11 +45,6 @@ namespace DataTables.Library
             }
 
             return dataTable;
-        }
-
-        private static bool IsNullableGeneric(Type type)
-        {
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
-        }
+        }        
     }
 }
