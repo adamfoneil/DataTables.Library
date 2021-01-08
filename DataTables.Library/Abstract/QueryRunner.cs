@@ -1,5 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +12,7 @@ namespace DataTables.Library.Abstract
     {        
         protected abstract SqlDataAdapter GetAdapter(IDbCommand command);
         protected abstract IDbCommand GetCommand(string sql, IDbConnection connection);
-        protected abstract void AddParameter(IDbCommand command, string name, object value);
+        protected abstract void AddParameter(IDbCommand command, string name, object value, SqlDbType? sqlDbType = null);
 
         public DataTable QueryTable(IDbConnection connection, string sql, object parameters = null)
         {
@@ -54,17 +56,34 @@ namespace DataTables.Library.Abstract
                 {
                     var props = parameters.GetType()
                         .GetProperties()
-                        .Where(pi => pi.CanRead && !pi.GetIndexParameters().Any())
+                        .Where(pi => pi.CanRead && !pi.GetIndexParameters().Any() && pi.GetValue(parameters) != null)
                         .ToArray();
 
                     foreach (var propertyInfo in props)
                     {
-                        AddParameter(cmd, propertyInfo.Name, propertyInfo.GetValue(parameters));                        
+                        var dbType = (Types.ContainsKey(propertyInfo.PropertyType)) ? Types[propertyInfo.PropertyType] : default(SqlDbType?);
+                        AddParameter(cmd, propertyInfo.Name, propertyInfo.GetValue(parameters), dbType);
                     }
                 }
             }
 
             return cmd;
+        }
+
+        private static Dictionary<Type, SqlDbType> Types
+        {
+            get => new Dictionary<Type, SqlDbType>()
+            {
+                [typeof(string)] = SqlDbType.NVarChar,
+                [typeof(int)] = SqlDbType.Int,
+                [typeof(int?)] = SqlDbType.Int,
+                [typeof(long)] = SqlDbType.BigInt,
+                [typeof(long?)] = SqlDbType.BigInt,
+                [typeof(DateTime)] = SqlDbType.DateTime,
+                [typeof(DateTime?)] = SqlDbType.DateTime,
+                [typeof(bool)] = SqlDbType.Bit,
+                [typeof(bool?)] = SqlDbType.Bit
+            };
         }
     }
 }

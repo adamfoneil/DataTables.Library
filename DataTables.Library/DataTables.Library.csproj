@@ -10,8 +10,8 @@
     <PackageId>DataTables.Library</PackageId>
     <PackageProjectUrl>https://github.com/adamfoneil/DataTables.Library</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamfoneil/DataTables.Library</RepositoryUrl>
-    <Version>2.0.6</Version>
-    <PackageReleaseNotes>extracted abstract base class to make it possible to support other databases besides SQL Server</PackageReleaseNotes>
+    <Version>2.0.7</Version>
+    <PackageReleaseNotes>better param typing with anon objects</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

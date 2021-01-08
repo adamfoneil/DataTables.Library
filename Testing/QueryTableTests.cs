@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlServer.LocalDb;
 using System.Collections.Generic;
 using DataTables.Library;
+using System.Data;
 
 namespace Testing
 {
@@ -28,10 +29,12 @@ namespace Testing
         [TestMethod]
         public void SyncCallWithAnonObjParams()
         {
+            const string objName = "sysfos";
             using (var cn = LocalDb.GetConnection(dbName))
             {
-                var dataTable = cn.QueryTable("SELECT * FROM [sys].[objects] WHERE [name]=@name", new { name = "sysfos" });
+                var dataTable = cn.QueryTable("SELECT * FROM [sys].[objects] WHERE [name]=@name", new { name = objName });
                 Assert.IsTrue(dataTable.Rows.Count == 1);
+                Assert.IsTrue(dataTable.Rows[0].Field<string>("name").Equals(objName));
             }
         }
         
