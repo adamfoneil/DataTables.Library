@@ -10,6 +10,12 @@ namespace DataTables.Library
             new SqlServerQueryRunner().QueryTable(connection, sql, parameters);
 
         public static async Task<DataTable> QueryTableAsync(this SqlConnection connection, string sql, object parameters = null) => 
-            await new SqlServerQueryRunner().QueryTableAsync(connection, sql, parameters);        
+            await new SqlServerQueryRunner().QueryTableAsync(connection, sql, parameters);
+
+        public static DataTable QuerySchemaTable(this SqlConnection connection, string sql, object parameters = null) =>
+            new SqlServerQueryRunner().QuerySchemaTable(connection, sql, parameters);
+
+        public static async Task<DataTable> QuerySchemaTableAsync(this SqlConnection connection, string sql, object parameters = null) =>
+            await new SqlServerQueryRunner().QuerySchemaTableAsync(connection, sql, parameters);
     }
 }

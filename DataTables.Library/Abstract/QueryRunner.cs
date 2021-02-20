@@ -49,6 +49,29 @@ namespace DataTables.Library.Abstract
             return result;
         }
 
+        public DataTable QuerySchemaTable(IDbConnection connection, string sql, object parameters = null)
+        {
+            using (var cmd = BuildCommand(connection, sql, parameters))
+            {
+                using (var reader = cmd.ExecuteReader(CommandBehavior.SchemaOnly))
+                {
+                    return reader.GetSchemaTable();
+                }
+            }
+        }
+
+        public async Task<DataTable> QuerySchemaTableAsync(IDbConnection connection, string sql, object parameters = null)
+        {
+            DataTable result = null;
+
+            await Task.Run(() =>
+            {
+                result = QuerySchemaTable(connection, sql, parameters);
+            });
+
+            return result;
+        }
+
         private IDbCommand BuildCommand(IDbConnection connection, string sql, object parameters)
         {
             IDbCommand cmd = GetCommand(sql, connection);

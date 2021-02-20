@@ -84,5 +84,25 @@ namespace Testing
             }
 
         }
+
+        [TestMethod]
+        public void QuerySchemaTable()
+        {
+            using (var cn = LocalDb.GetConnection(dbName))
+            {
+                var schemaTable = cn.QuerySchemaTable("SELECT * FROM [sys].[tables]");
+                Assert.IsTrue(schemaTable.Columns.Contains("ColumnName"));
+            }
+        }
+
+        [TestMethod]
+        public void QuerySchemaTableAsync()
+        {
+            using (var cn = LocalDb.GetConnection(dbName))
+            {
+                var schemaTable = cn.QuerySchemaTableAsync("SELECT * FROM [sys].[tables]").Result;
+                Assert.IsTrue(schemaTable.Columns.Contains("ColumnName"));
+            }
+        }
     }
 }
