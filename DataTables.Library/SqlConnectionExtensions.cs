@@ -17,5 +17,8 @@ namespace DataTables.Library
 
         public static async Task<DataTable> QuerySchemaTableAsync(this SqlConnection connection, string sql, object parameters = null) =>
             await new SqlServerQueryRunner().QuerySchemaTableAsync(connection, sql, parameters);
+
+        public static async Task<string> SqlCreateTableAsync(this SqlConnection connection, string schema, string tableName, string sql, object parameters = null) =>
+            await new SqlServerQueryRunner().SqlCreateTableAsync(connection, schema, tableName, sql, parameters);
     }
 }

@@ -10,8 +10,8 @@
     <PackageId>DataTables.Library</PackageId>
     <PackageProjectUrl>https://github.com/adamfoneil/DataTables.Library</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamfoneil/DataTables.Library</RepositoryUrl>
-    <Version>2.0.11</Version>
-    <PackageReleaseNotes>added QuerySchemaTable(Async)</PackageReleaseNotes>
+    <Version>2.0.12</Version>
+    <PackageReleaseNotes>added SqlCreateTableAsync</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

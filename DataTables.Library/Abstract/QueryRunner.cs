@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DataTables.Library.Abstract
@@ -70,6 +71,42 @@ namespace DataTables.Library.Abstract
             });
 
             return result;
+        }
+
+        public async Task<string> SqlCreateTableAsync(IDbConnection connection, string schema, string name, string sql, object parameters = null)
+        {
+            var schemaTable = await QuerySchemaTableAsync(connection, sql, parameters);
+            
+            StringBuilder result = new StringBuilder();
+            result.Append($"CREATE TABLE [{schema}].[{name}] (\r\n\t");
+            var columns = SqlCreateColumns(schemaTable);
+            result.Append(string.Join(",\r\n\t", columns) + "\r\n");
+            result.AppendLine(")");
+
+            return result.ToString();
+        }
+
+        public IEnumerable<string> SqlCreateColumns(DataTable schemaTable)
+        {
+            foreach (DataRow row in schemaTable.Rows)
+            {
+                yield return ColumnSyntax(row);
+            }
+
+            string ColumnSyntax(DataRow row)
+            {
+                string result = $"[{row.Field<string>("ColumnName")}]";
+
+                result += $" {row.Field<string>("DataTypeName")}";
+
+                if (row.Field<string>("DataTypeName").StartsWith("nvar") || row.Field<string>("DataTypeName").StartsWith("var")) result += $"({row.Field<int>("ColumnSize")})";
+
+                if (row.Field<bool>("IsIdentity")) result += " identity(1,1)";
+
+                result += (row.Field<bool>("AllowDbNull")) ? " NULL" : " NOT NULL";
+
+                return result;
+            }
         }
 
         private IDbCommand BuildCommand(IDbConnection connection, string sql, object parameters)

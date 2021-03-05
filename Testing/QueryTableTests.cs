@@ -3,6 +3,7 @@ using SqlServer.LocalDb;
 using System.Collections.Generic;
 using DataTables.Library;
 using System.Data;
+using Dapper;
 
 namespace Testing
 {
@@ -102,6 +103,17 @@ namespace Testing
             {
                 var schemaTable = cn.QuerySchemaTableAsync("SELECT * FROM [sys].[tables]").Result;
                 Assert.IsTrue(schemaTable.Columns.Contains("ColumnName"));
+            }
+        }
+
+        [TestMethod]
+        public void CreateTable()
+        {
+            using (var cn = LocalDb.GetConnection(dbName))
+            {                
+                var createTable = cn.SqlCreateTableAsync("dbo", "SampleTable", "SELECT * FROM [sys].[tables]").Result;
+                cn.Execute(createTable);
+                cn.Execute("DROP TABLE [dbo].[SampleTable]");
             }
         }
     }
