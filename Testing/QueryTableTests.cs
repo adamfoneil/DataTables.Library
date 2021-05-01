@@ -10,18 +10,18 @@ namespace Testing
     [TestClass]
     public class QueryTableTests
     {
-        private const string dbName = "AdoUtil";
+        public const string DbName = "AdoUtil";
 
         [ClassInitialize]
         public static void Initialize(TestContext context)
         {
-            LocalDb.TryDropDatabase(dbName, out _);
+            LocalDb.TryDropDatabase(DbName, out _);
         }
 
         [TestMethod]
         public void SyncCallNoParams()
         {
-            using (var cn = LocalDb.GetConnection(dbName))
+            using (var cn = LocalDb.GetConnection(DbName))
             {
                 var dataTable = cn.QueryTable("SELECT * FROM [sys].[tables]");
             }
@@ -31,7 +31,7 @@ namespace Testing
         public void SyncCallWithAnonObjParams()
         {
             const string objName = "sysfos";
-            using (var cn = LocalDb.GetConnection(dbName))
+            using (var cn = LocalDb.GetConnection(DbName))
             {
                 var dataTable = cn.QueryTable("SELECT * FROM [sys].[objects] WHERE [name]=@name", new { name = objName });
                 Assert.IsTrue(dataTable.Rows.Count == 1);
@@ -42,7 +42,7 @@ namespace Testing
         [TestMethod]
         public void AsyncCallNoParams()
         {
-            using (var cn = LocalDb.GetConnection(dbName))
+            using (var cn = LocalDb.GetConnection(DbName))
             {
                 var dataTable = cn.QueryTableAsync("SELECT * FROM [sys].[objects]").Result;
                 Assert.IsTrue(dataTable.Rows.Count > 0);
@@ -52,7 +52,7 @@ namespace Testing
         [TestMethod]
         public void AsyncCallWithAnonObjParam()
         {
-            using (var cn = LocalDb.GetConnection(dbName))
+            using (var cn = LocalDb.GetConnection(DbName))
             {
                 var dataTable = cn.QueryTableAsync("SELECT * FROM [sys].[objects] WHERE [name]=@name", new { name = "sysfos" }).Result;
                 Assert.IsTrue(dataTable.Rows.Count == 1);
@@ -62,7 +62,7 @@ namespace Testing
         [TestMethod]
         public void SyncCallWithDictionaryParam()
         {
-            using (var cn = LocalDb.GetConnection(dbName))
+            using (var cn = LocalDb.GetConnection(DbName))
             {
                 // won't be any data, just want to make sure no exception using parameter
                 var dataTable = cn.QueryTable("SELECT * FROM [sys].[tables] WHERE [name]=@name", new Dictionary<string, object>()
@@ -75,7 +75,7 @@ namespace Testing
         [TestMethod]
         public void AsyncCallWithDictionaryParam()
         {
-            using (var cn = LocalDb.GetConnection(dbName))
+            using (var cn = LocalDb.GetConnection(DbName))
             {                
                 var dataTable = cn.QueryTableAsync("SELECT * FROM [sys].[objects] WHERE [name]=@name", new Dictionary<string, object>()
                 {
@@ -89,7 +89,7 @@ namespace Testing
         [TestMethod]
         public void QuerySchemaTable()
         {
-            using (var cn = LocalDb.GetConnection(dbName))
+            using (var cn = LocalDb.GetConnection(DbName))
             {
                 var schemaTable = cn.QuerySchemaTable("SELECT * FROM [sys].[tables]");
                 Assert.IsTrue(schemaTable.Columns.Contains("ColumnName"));
@@ -99,7 +99,7 @@ namespace Testing
         [TestMethod]
         public void QuerySchemaTableAsync()
         {
-            using (var cn = LocalDb.GetConnection(dbName))
+            using (var cn = LocalDb.GetConnection(DbName))
             {
                 var schemaTable = cn.QuerySchemaTableAsync("SELECT * FROM [sys].[tables]").Result;
                 Assert.IsTrue(schemaTable.Columns.Contains("ColumnName"));
@@ -109,7 +109,7 @@ namespace Testing
         [TestMethod]
         public void CreateTable()
         {
-            using (var cn = LocalDb.GetConnection(dbName))
+            using (var cn = LocalDb.GetConnection(DbName))
             {                
                 var createTable = cn.SqlCreateTableAsync("dbo", "SampleTable", "SELECT * FROM [sys].[tables]").Result;
                 cn.Execute(createTable);
