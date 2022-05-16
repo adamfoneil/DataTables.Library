@@ -10,8 +10,9 @@
     <PackageId>DataTables.Library</PackageId>
     <PackageProjectUrl>https://github.com/adamfoneil/DataTables.Library</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamfoneil/DataTables.Library</RepositoryUrl>
-    <Version>2.0.13</Version>
-    <PackageReleaseNotes>https://github.com/adamfoneil/DataTables.Library/issues/1</PackageReleaseNotes>
+    <Version>2.0.14</Version>
+    <PackageReleaseNotes>https://github.com/adamfoneil/DataTables.Library/issues/1
+set System.Text.Json version to 4.7.2</PackageReleaseNotes>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
@@ -20,7 +21,7 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="System.Text.Json" Version="5.0.2" />
+    <PackageReference Include="System.Text.Json" Version="4.7.2" />
   </ItemGroup>
 
   <ItemGroup>
