@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using DataTables.Library;
 using System.Data;
 using Dapper;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace Testing
 {
@@ -114,6 +116,32 @@ namespace Testing
                 var createTable = cn.SqlCreateTableAsync("dbo", "SampleTable", "SELECT * FROM [sys].[tables]").Result;
                 cn.Execute(createTable);
                 cn.Execute("DROP TABLE [dbo].[SampleTable]");
+            }
+        }
+
+        [TestMethod]
+        public async Task SimpleTvpExample()
+        {
+            using (var cn = LocalDb.GetConnection(DbName))
+            {
+                try
+                {
+                    cn.Execute("CREATE TYPE [IdList] AS TABLE ([Id] int NOT NULL PRIMARY KEY)");
+                }
+                catch
+                {
+                    // do nothing                    
+                }
+
+                var results = await cn.QueryTableAsync(
+                    @"DECLARE @list [IdList];
+                    INSERT INTO @list ([Id]) SELECT [Id] FROM @source;
+                    SELECT [Id] FROM @list", new
+                    {
+                        source = new int[] { 1, 2, 3 }.ToDataTable("IdList")
+                    });
+
+                Assert.IsTrue(results.AsEnumerable().Select(row => row.Field<int>(0)).SequenceEqual(new int[] { 1, 2, 3 }));
             }
         }
     }

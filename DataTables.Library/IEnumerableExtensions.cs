@@ -12,9 +12,9 @@ namespace DataTables.Library
         /// <summary>
         /// adapted from https://www.codeproject.com/Articles/835519/Passing-Table-Valued-Parameters-with-Dapper
         /// </summary>
-        public static DataTable ToDataTable<T>(this IEnumerable<T> enumerable, bool simpleTypesOnly = true)
+        public static DataTable ToDataTable<T>(this IEnumerable<T> enumerable, string tableName = "DataTable", bool simpleTypesOnly = true)
         {
-            DataTable dataTable = new DataTable();
+            DataTable dataTable = new DataTable(tableName);
 
             if (typeof(T).IsValueType || typeof(T).FullName.Equals("System.String"))
             {

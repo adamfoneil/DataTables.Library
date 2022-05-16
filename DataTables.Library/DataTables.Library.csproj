@@ -10,11 +10,12 @@
     <PackageId>DataTables.Library</PackageId>
     <PackageProjectUrl>https://github.com/adamfoneil/DataTables.Library</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamfoneil/DataTables.Library</RepositoryUrl>
-    <Version>2.0.14</Version>
-    <PackageReleaseNotes>https://github.com/adamfoneil/DataTables.Library/issues/1
-set System.Text.Json version to 4.7.2</PackageReleaseNotes>
+    <Version>2.0.15</Version>
+    <PackageReleaseNotes>Table-valued parameter support
+https://github.com/adamfoneil/DataTables.Library/issues/2</PackageReleaseNotes>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Copyright>Copyright (c) 2022 Adam O'Neil</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

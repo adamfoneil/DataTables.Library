@@ -15,7 +15,7 @@ namespace DataTables.Library.Abstract
     {        
         protected abstract SqlDataAdapter GetAdapter(IDbCommand command);
         protected abstract IDbCommand GetCommand(string sql, IDbConnection connection);
-        protected abstract void AddParameter(IDbCommand command, string name, object value, SqlDbType? sqlDbType = null);
+        protected abstract void AddParameter(IDbCommand command, string name, object value, SqlDbType? sqlDbType = null, Action<IDbDataParameter> action = null);
 
         public DataTable QueryTable(IDbConnection connection, string sql, object parameters = null)
         {
@@ -121,39 +121,48 @@ namespace DataTables.Library.Abstract
                     {
                         AddParameter(cmd, key, dictionary[key]);                        
                     }
+                    return cmd;
                 }
-                else
-                {
-                    var props = parameters.GetType()
-                        .GetProperties()
-                        .Where(pi => pi.PropertyType.IsSimpleType() && pi.CanRead && !pi.GetIndexParameters().Any() && pi.GetValue(parameters) != null)
-                        .ToArray();
+                
+                var props = parameters.GetType()
+                    .GetProperties()
+                    .Where(pi => pi.PropertyType.IsSimpleType() && pi.CanRead && !pi.GetIndexParameters().Any() && pi.GetValue(parameters) != null)
+                    .ToArray();
 
-                    foreach (var propertyInfo in props)
-                    {
-                        var dbType = (Types.ContainsKey(propertyInfo.PropertyType)) ? Types[propertyInfo.PropertyType] : default(SqlDbType?);
-                        AddParameter(cmd, propertyInfo.Name, propertyInfo.GetValue(parameters), dbType);
-                    }
+                foreach (var propertyInfo in props)
+                {
+                    var dbType = (Types.ContainsKey(propertyInfo.PropertyType)) ? Types[propertyInfo.PropertyType] : default(SqlDbType?);
+                    AddParameter(cmd, propertyInfo.Name, propertyInfo.GetValue(parameters), dbType);
                 }
+
+                var tableProps = parameters.GetType()
+                    .GetProperties()
+                    .Where(pi => pi.PropertyType.Equals(typeof(DataTable)));
+
+                foreach (var propertyInfo in tableProps)
+                {
+                    var dataTable = propertyInfo.GetValue(parameters) as DataTable;
+                    AddParameter(cmd, propertyInfo.Name, dataTable, SqlDbType.Structured, (p) =>
+                    {
+                        (p as SqlParameter).TypeName = dataTable.TableName;
+                    });
+                }                
             }
 
             return cmd;
         }
 
-        private static Dictionary<Type, SqlDbType> Types
+        private static Dictionary<Type, SqlDbType> Types => new Dictionary<Type, SqlDbType>()
         {
-            get => new Dictionary<Type, SqlDbType>()
-            {
-                [typeof(string)] = SqlDbType.NVarChar,
-                [typeof(int)] = SqlDbType.Int,
-                [typeof(int?)] = SqlDbType.Int,
-                [typeof(long)] = SqlDbType.BigInt,
-                [typeof(long?)] = SqlDbType.BigInt,
-                [typeof(DateTime)] = SqlDbType.DateTime,
-                [typeof(DateTime?)] = SqlDbType.DateTime,
-                [typeof(bool)] = SqlDbType.Bit,
-                [typeof(bool?)] = SqlDbType.Bit
-            };
-        }
+            [typeof(string)] = SqlDbType.NVarChar,
+            [typeof(int)] = SqlDbType.Int,
+            [typeof(int?)] = SqlDbType.Int,
+            [typeof(long)] = SqlDbType.BigInt,
+            [typeof(long?)] = SqlDbType.BigInt,
+            [typeof(DateTime)] = SqlDbType.DateTime,
+            [typeof(DateTime?)] = SqlDbType.DateTime,
+            [typeof(bool)] = SqlDbType.Bit,
+            [typeof(bool?)] = SqlDbType.Bit
+        };        
     }
 }
