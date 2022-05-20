@@ -1,5 +1,9 @@
 ﻿using DataTables.Library.Abstract;
+#if NETSTANDARD2_0
 using Microsoft.Data.SqlClient;
+#else
+using System.Data.SqlClient;
+#endif
 using System;
 using System.Data;
 

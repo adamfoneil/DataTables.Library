@@ -1,5 +1,10 @@
-﻿using Microsoft.Data.SqlClient;
+﻿#if NETSTANDARD2_0
+using Microsoft.Data.SqlClient;
+#else
+using System.Data.SqlClient;
+#endif
 using System.Data;
+
 using System.Threading.Tasks;
 
 namespace DataTables.Library
