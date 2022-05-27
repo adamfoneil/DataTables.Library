@@ -144,5 +144,30 @@ namespace Testing
                 Assert.IsTrue(results.AsEnumerable().Select(row => row.Field<int>(0)).SequenceEqual(new int[] { 1, 2, 3 }));
             }
         }
+
+        [TestMethod]
+        public async Task StoredProc()
+        {
+            using (var cn = LocalDb.GetConnection(DbName))
+            {
+                var commands = new[]
+                {
+                    @"DROP PROC IF EXISTS [dbo].[SampleSelect]",
+                    @"CREATE PROC [dbo].[SampleSelect]
+                        @name nvarchar(50)
+                    AS
+                    SET NOCOUNT ON
+
+                    SELECT * FROM [sys].[columns] WHERE [name] LIKE CONCAT('%', @name, '%') ORDER BY [name]"
+                };
+
+                foreach (var cmd in commands) await cn.ExecuteAsync(cmd);
+
+                var data = await cn.QueryTableAsync("dbo.SampleSelect", new
+                {
+                    name = "id"
+                }, CommandType.StoredProcedure);
+            }
+        }
     }
 }
