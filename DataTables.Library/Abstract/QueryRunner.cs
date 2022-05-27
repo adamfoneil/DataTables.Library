@@ -18,12 +18,12 @@ namespace DataTables.Library.Abstract
     public abstract class QueryRunner
     {        
         protected abstract SqlDataAdapter GetAdapter(IDbCommand command);
-        protected abstract IDbCommand GetCommand(string sql, IDbConnection connection);
+        protected abstract IDbCommand GetCommand(string sql, IDbConnection connection, CommandType? commandType);
         protected abstract void AddParameter(IDbCommand command, string name, object value, SqlDbType? sqlDbType = null, Action<IDbDataParameter> action = null);
 
-        public DataTable QueryTable(IDbConnection connection, string sql, object parameters = null)
+        public DataTable QueryTable(IDbConnection connection, string sql, object parameters = null, CommandType? commandType = null)
         {
-            using (var cmd = BuildCommand(connection, sql, parameters))
+            using (var cmd = BuildCommand(connection, sql, parameters, commandType))
             {
                 Debug.Print($"QueryTable SQL: {sql}");
                 
@@ -42,13 +42,13 @@ namespace DataTables.Library.Abstract
             }
         }
 
-        public async Task<DataTable> QueryTableAsync(IDbConnection connection, string sql, object parameters = null)
+        public async Task<DataTable> QueryTableAsync(IDbConnection connection, string sql, object parameters = null, CommandType? commandType = null)
         {
             DataTable result = null;
 
             await Task.Run(() =>
             {
-                result = QueryTable(connection, sql, parameters);
+                result = QueryTable(connection, sql, parameters, commandType);
             });
 
             return result;
@@ -113,9 +113,9 @@ namespace DataTables.Library.Abstract
             }
         }
 
-        private IDbCommand BuildCommand(IDbConnection connection, string sql, object parameters)
+        private IDbCommand BuildCommand(IDbConnection connection, string sql, object parameters, CommandType? commandType = null)
         {
-            IDbCommand cmd = GetCommand(sql, connection);
+            IDbCommand cmd = GetCommand(sql, connection, commandType);
 
             if (parameters != null)
             {

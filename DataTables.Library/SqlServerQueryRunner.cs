@@ -31,6 +31,11 @@ namespace DataTables.Library
 
         protected override SqlDataAdapter GetAdapter(IDbCommand command) => new SqlDataAdapter(command as SqlCommand);
 
-        protected override IDbCommand GetCommand(string sql, IDbConnection connection) => new SqlCommand(sql, connection as SqlConnection);        
+        protected override IDbCommand GetCommand(string sql, IDbConnection connection, CommandType? commandType)
+        {
+            var result = new SqlCommand(sql, connection as SqlConnection);
+            if (commandType.HasValue) result.CommandType = commandType.Value;
+            return result;
+        }
     }
 }
