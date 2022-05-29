@@ -7,7 +7,6 @@ Nuget package: **DataTables.Library** (formerly AdoUtil.Library)
 
 Version 2.x of this library offers these extension methods:
 
-
 # DataTables.Library.DataTableExtensions [DataTableExtensions.cs](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/DataTableExtensions.cs#L11)
 ## Methods
 - Task\<string\> [SerializeAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/DataTableExtensions.cs#L16)
@@ -15,20 +14,17 @@ Version 2.x of this library offers these extension methods:
 - Task [FromJsonAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/DataTableExtensions.cs#L45)
  (this DataTable dataTable, string json, [ JsonSerializerOptions options ])
 
-# DataTables.Library.IEnumerableExtensions [IEnumerableExtensions.cs](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/IEnumerableExtensions.cs#L10)
+# DataTables.Library.Abstract.QueryRunner [QueryRunner.cs](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs)
 ## Methods
-- DataTable [ToDataTable](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/IEnumerableExtensions.cs#L15)
- (this IEnumerable<T> enumerable, [ bool simpleTypesOnly ])
-
-# DataTables.Library.SqlConnectionExtensions [SqlConnectionExtensions.cs](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L7)
-## Methods
-- DataTable [QueryTable](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L9)
- (this SqlConnection connection, string sql, [ object parameters ])
-- Task\<DataTable\> [QueryTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L12)
- (this SqlConnection connection, string sql, [ object parameters ])
-- DataTable [QuerySchemaTable](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L15)
- (this SqlConnection connection, string sql, [ object parameters ])
-- Task\<DataTable\> [QuerySchemaTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L18)
- (this SqlConnection connection, string sql, [ object parameters ])
-- Task\<string\> [SqlCreateTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/SqlConnectionExtensions.cs#L21)
- (this SqlConnection connection, string schema, string tableName, string sql, [ object parameters ])
+- DataTable [QueryTable](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L24)
+ (IDbConnection connection, string sql, [ object parameters ], [ CommandType? commandType ])
+- Task\<DataTable\> [QueryTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L45)
+ (IDbConnection connection, string sql, [ object parameters ], [ CommandType? commandType ])
+- DataTable [QuerySchemaTable](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L57)
+ (IDbConnection connection, string sql, [ object parameters ])
+- Task\<DataTable\> [QuerySchemaTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L68)
+ (IDbConnection connection, string sql, [ object parameters ])
+- Task\<string\> [SqlCreateTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L80)
+ (IDbConnection connection, string schema, string name, string sql, [ object parameters ])
+- IEnumerable\<string\> [SqlCreateColumns](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L93)
+ (DataTable schemaTable)
