@@ -10,37 +10,56 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataTables.Library.Abstract
 {
     public abstract class QueryRunner
-    {        
+    {
         protected abstract SqlDataAdapter GetAdapter(IDbCommand command);
         protected abstract IDbCommand GetCommand(string sql, IDbConnection connection, CommandType? commandType);
         protected abstract void AddParameter(IDbCommand command, string name, object value, SqlDbType? sqlDbType = null, Action<IDbDataParameter> action = null);
 
-        public DataTable QueryTable(IDbConnection connection, string sql, object parameters = null, CommandType? commandType = null)
+        private T QueryInternal<T>(IDbConnection connection, Func<SqlDataAdapter, T, int> fillAction, string sql, object parameters = null, CommandType? commandType = null, [CallerMemberName] string callingMethod = null) where T : new()
         {
             using (var cmd = BuildCommand(connection, sql, parameters, commandType))
             {
-                Debug.Print($"QueryTable SQL: {sql}");
-                
+                Debug.Print($"{callingMethod} SQL: {sql}");
+
                 foreach (IDbDataParameter p in cmd.Parameters)
                 {
-                    Debug.Print($"QueryTable Param: {p.ParameterName} = {p.Value?.ToString()}");
+                    Debug.Print($"{callingMethod} Param: {p.ParameterName} = {p.Value?.ToString()}");
                 }
 
                 using (var adapter = GetAdapter(cmd))
                 {
-                    DataTable result = new DataTable();
-                    int rows = adapter.Fill(result);
-                    Debug.Print($"QueryTable execute: {rows:n0} affected");
+                    T result = new T();
+                    int rows = fillAction.Invoke(adapter, result);
+                    Debug.Print($"{callingMethod} execute: {rows:n0} affected");
                     return result;
                 }
             }
         }
+
+        public DataSet QueryDataSet(IDbConnection connection, string sql, object parameters = null, CommandType? commandType = null) =>
+            QueryInternal<DataSet>(connection, (adapter, ds) => adapter.Fill(ds), sql, parameters, commandType);
+
+        public async Task<DataSet> QueryDataSetAsync(IDbConnection connection, string sql, object parameters = null, CommandType? commandType = null)
+        {
+            DataSet result = null;
+            
+            await Task.Run(() =>
+            {
+                result = QueryDataSet(connection, sql, parameters, commandType);
+            });
+
+            return result;
+        }        
+
+        public DataTable QueryTable(IDbConnection connection, string sql, object parameters = null, CommandType? commandType = null) =>
+            QueryInternal<DataTable>(connection, (adapter, dataTable) => adapter.Fill(dataTable), sql, parameters, commandType);
 
         public async Task<DataTable> QueryTableAsync(IDbConnection connection, string sql, object parameters = null, CommandType? commandType = null)
         {

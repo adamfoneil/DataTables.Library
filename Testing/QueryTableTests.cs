@@ -85,7 +85,6 @@ namespace Testing
                 }).Result;
                 Assert.IsTrue(dataTable.Rows.Count == 1);
             }
-
         }
 
         [TestMethod]
@@ -167,6 +166,19 @@ namespace Testing
                 {
                     name = "id"
                 }, CommandType.StoredProcedure);
+            }
+        }
+
+        [TestMethod]
+        public async Task DataSet()
+        {
+            using (var cn = LocalDb.GetConnection(DbName))
+            {
+                var ds = await cn.QueryDataSetAsync(
+                    @"SELECT * FROM [sys].[tables];
+                    SELECT * FROM [sys].[columns]");
+
+                Assert.IsTrue(ds.Tables.Count == 2);
             }
         }
     }
