@@ -32,3 +32,8 @@ Version 2.x of this library offers these extension methods:
  (IDbConnection connection, string schema, string name, string sql, [ object parameters ])
 - IEnumerable\<string\> [SqlCreateColumns](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L112)
  (DataTable schemaTable)
+
+## Tips
+- Yes, you can use table value parameters. See the [test](https://github.com/adamfoneil/DataTables.Library/blob/master/Testing/QueryTableTests.cs#L122) for an example
+- The [serialization methods](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/DataTableExtensions.cs) are there because the built-in XML support does not seem to work in async methods.
+- The `parameters` object on any of the methods can be in anonymous object form (Dapper-style), or you can use [Dictionary form](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L141)
