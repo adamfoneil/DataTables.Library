@@ -16,15 +16,24 @@ Version 2.x of this library offers these extension methods:
 
 # DataTables.Library.Abstract.QueryRunner [QueryRunner.cs](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs)
 ## Methods
-- DataTable [QueryTable](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L24)
+- DataSet [QueryDataSet](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L46)
  (IDbConnection connection, string sql, [ object parameters ], [ CommandType? commandType ])
-- Task\<DataTable\> [QueryTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L45)
+- Task\<DataSet\> [QueryDataSetAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L49)
  (IDbConnection connection, string sql, [ object parameters ], [ CommandType? commandType ])
-- DataTable [QuerySchemaTable](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L57)
+- DataTable [QueryTable](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L61)
+ (IDbConnection connection, string sql, [ object parameters ], [ CommandType? commandType ])
+- Task\<DataTable\> [QueryTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L64)
+ (IDbConnection connection, string sql, [ object parameters ], [ CommandType? commandType ])
+- DataTable [QuerySchemaTable](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L76)
  (IDbConnection connection, string sql, [ object parameters ])
-- Task\<DataTable\> [QuerySchemaTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L68)
+- Task\<DataTable\> [QuerySchemaTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L87)
  (IDbConnection connection, string sql, [ object parameters ])
-- Task\<string\> [SqlCreateTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L80)
+- Task\<string\> [SqlCreateTableAsync](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L99)
  (IDbConnection connection, string schema, string name, string sql, [ object parameters ])
-- IEnumerable\<string\> [SqlCreateColumns](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L93)
+- IEnumerable\<string\> [SqlCreateColumns](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L112)
  (DataTable schemaTable)
+
+## Tips
+- Yes, you can use table value parameters. See the [test](https://github.com/adamfoneil/DataTables.Library/blob/master/Testing/QueryTableTests.cs#L122) for an example
+- The [serialization methods](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/DataTableExtensions.cs) are there because the built-in XML support does not seem to work in async methods.
+- The `parameters` object on any of the methods can be in anonymous object form (Dapper-style), or you can use [Dictionary form](https://github.com/adamfoneil/DataTables.Library/blob/master/DataTables.Library/Abstract/QueryRunner.cs#L141)
